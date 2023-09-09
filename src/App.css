@@ -1,0 +1,144 @@
+
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(1px + 1.5vmin);
+  color: rgb(9, 2, 2);
+
+}
+
+.logo {
+  width: 100%;
+  max-width: 10px;
+  max-width: 30%;
+  display: block;
+  margin: 0 auto;
+}
+
+
+:root {
+  
+  --black: #343434;
+  --white: #fff;
+}
+
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
+
+.poke-list {
+  width: 100%;
+  max-width: 1004px;
+  margin: 2rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button-container {
+  text-align: center;
+}
+
+.load-more {
+  margin: 0 auto;
+  padding: .5rem 1rem;
+ /* display: block; */
+  border: 0;
+  border-radius: 15px;
+  cursor: pointer;
+  text-align: center;
+}
+
+
+.card-container {
+  width: 184px;
+  height: 147px;
+  margin-right: 21px;
+  margin-bottom: 32px;
+  background-color: var(--white);
+  border-radius: 5px;
+  position: relative;
+  transition: all .4s;
+
+}
+
+
+.card-container:hover {
+  transform: translateY(-5px);
+}
+
+.card-container:nth-child(5n) {
+  margin-right: 0;
+}
+
+
+.card-container img {
+  width: 114px;
+  height: 114px;
+  display: block;
+  margin: 0 auto;
+}
+
+.card-container .poke-number {
+  color: #000;
+  position: absolute;
+  top: 4px;
+  right: 15px;
+}
+
+.card-container .poke-name {
+  text-align: center;
+  color: var(--black);
+  font-size: 16px;
+}
+
+
+
+
+.poke-list li img  {
+  max-width: 100%;
+  height: 20px;
+}
+
+
+
+
+
+
+
+
+.search-box {
+  width: 294px;
+  height: 35px;
+  
+    display: flex;
+    justify-content: center;
+  
+}
+
+ .search-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+
+
+.search-box input {
+  flex: 1;
+  border: 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+} 
+
+
