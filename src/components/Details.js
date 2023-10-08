@@ -1,30 +1,24 @@
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import {  useQuery } from '@tanstack/react-query';
 
 function Details() {
     
   const { id } = useParams();
+  const navigate = useNavigate();
 
-    const [pokemonDetail, setPokemonDetail] = useState({});
-    
-    useEffect(() => {
-        fetch('https://pokeapi.co/api/v2/pokemon/'+id)
-        .then((res) => res.json())
-        .then((data) => { 
-            const pkmName = data.name.charAt().toUpperCase() + data.name.substring(1)
-            const pokemonDetailsRequest = {
-                nombre: pkmName,
-                id: data.id,
-                img: data.sprites.front_default,
-                type: data.types.map(type => type.type.name).join(", "),
-                stats:data.stats.map(stats => stats.base_stat).join(", "),
-                height: data.height,
-                weight: data.weight
-               };
-               setPokemonDetail(pokemonDetailsRequest)
-            });
-    },[id]);
+  const { isLoading, error, data } = useQuery(['pokemon', id], () =>
+  fetch('https://pokeapi.co/api/v2/pokemon/'+id)
+    .then((res) => res.json())
+);
+
+
+  if (isLoading) return 'Cargando...';
+
+  if (error) return 'An error has occurred: ' + error.message;
+
   return (
+    
     <nav>
       <div id="left">
   <div id="logo"></div>
@@ -50,7 +44,7 @@ function Details() {
       <div id="buttontopPicture2"></div>
     </div>  
     <div id="picture">
-      <img src={pokemonDetail.img} alt={pokemonDetail.nombre} height="170" />
+    <img src={data.sprites.front_default} alt={data.nombre} height="170" /> 
     </div>
     <div id="buttonbottomPicture"></div>
     <div id="speakers">
@@ -71,6 +65,7 @@ function Details() {
       <div id="upT"></div>
     </div>
     <div id="rightcross">
+
       <div id="rightT"></div>
     </div>
     <div id="midcross">
@@ -82,14 +77,14 @@ function Details() {
   </div>
 </div>
 <div id="right">
-  <div id="stats">
-    <strong>Nombre:</strong> {pokemonDetail.nombre} <br/>
-    <strong>Tipo:</strong> {pokemonDetail.type}<br/>
-    <strong>Altura:</strong> {pokemonDetail.height}''<br/>
-    <strong>Peso:</strong> {pokemonDetail.weight} lbs.<br/><br/>
+   <div id="stats">
+  <strong>Nombre:</strong> {data.name} <br/>
+     <strong>Tipo:</strong> {data.types.map(type => type.type.name).join(", ")}<br/>
+    <strong>Altura:</strong> {data.height}''<br/>
+    <strong>Peso:</strong> {data.weight} lbs.<br/><br/>
     <strong></strong><br/>
 
-  </div>
+  </div> 
   <div id="blueButtons1">
     <div className="blueButton"></div>
     <div className="blueButton"></div>
@@ -97,7 +92,7 @@ function Details() {
     <div className="blueButton"></div>
     <div className="blueButton"></div>
   </div>
-  <div id="blueButtons2">
+ <div id="blueButtons2">
     <div className="blueButton"></div>
     <div className="blueButton"></div>
     <div className="blueButton"></div>
@@ -110,11 +105,15 @@ function Details() {
   <div id="barbutton4"></div>
   <div id="yellowBox1">
 <br/>
-  <strong>Estadisticas Base<br/>{pokemonDetail.stats}</strong></div>
+ <strong>Estadisticas Base<br/>{data.stats.map(stats => stats.base_stat).join(", ")}</strong> 
+  </div>
   <div id="yellowBox2">
   <br/>
-  <a href={`https://www.pokemon.com/es/pokedex/${pokemonDetail.nombre}`}>
+  <i className="bi bi-caret-right-fill"></i>
+
+  <a href={`https://www.pokemon.com/es/pokedex/${data.name}`}>
   <strong>Más Info</strong>
+
 </a>
  
   </div>
@@ -124,9 +123,15 @@ function Details() {
   <div id="bg_curve2_right"></div>
   <div id="curve1_right"></div>
   <div id="curve2_right"></div>
+
+  <button onClick={() => navigate(`/details/${parseInt(id) - 1}`)}>Anterior</button>
+      <button onClick={() => navigate(`/details/${parseInt(id) + 1}`)}>Siguiente</button>
 </div>
+
     </nav>
+
+    
   )
-}
+};
 
 export default Details

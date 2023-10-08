@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from '@tanstack/react-query'
+import { useQuery,} from '@tanstack/react-query'
 import PokedexList from './PokedexList';
 
 
+export default function Pokedex() {
 
-const getData = () => {
+  const [offset, setOffset] = useState(0);
+  const [pokemons, setPokemons] = useState([]);
   const pkmsPerPages = 20;
-  const offset = 0;
+
+
+const getData = (offset) => {
+
   return fetch('https://pokeapi.co/api/v2/pokemon/?limit=' + pkmsPerPages + '&offset=' + offset)
       .then((res) => res.json())
       .then((data) => {
@@ -29,37 +30,29 @@ const getData = () => {
       
  }
 
-export default function Pokedex() {
 
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [pkmsPerPages, setPkmsPerPages] = useState(20);
+  const { isLoading, error, data } = useQuery(['pokemons', offset], () => getData(offset));
 
-  
-  const { isLoading, error, data } = useQuery({
-    
-    queryKey: ['pokemons'],
-    queryFn: getData
-           
-  })
+  useEffect(() => {
+    if (data) {
+      setPokemons(prevPokemons => prevPokemons.concat(data));
+    }
+  }, [data]);
+
+
+
+
   if (isLoading) return 'Cargando...'
 
   if (error) return 'Ocurrio un error: ' + error.message
 
   return (
+
  <div>
+    <PokedexList  pokemons={pokemons} 
+                  offset={offset} 
+                  setOffset={setOffset} />
 
- 
-  
-
- <PokedexList pokemons={data} ></PokedexList>
-  {/* <Pagination 
-
-    currentPage={currentPage} 
-    setCurrentPage={setCurrentPage}  
-    pkmsPerPages={pkmsPerPages}
-    setPkmsPerPages={setPkmsPerPages}
-    
-    ></Pagination>  */}
  </div>
   )
 

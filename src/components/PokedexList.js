@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 
 
-export default function PokedexList(props) {
-    const pokemons = props.pokemons
+export default function PokedexList({ pokemons, offset, setOffset }) {
+    
     
     
   return (
-    
+    <>
     <div className ="poke-list" >
       {pokemons.map((pokemon) => (
         
@@ -22,7 +22,12 @@ export default function PokedexList(props) {
 
          </Link>
       ))}
+
     </div>
+        
+    <button onClick={() => setOffset(offset + 20)}>Cargar más</button>
+    </>
+    
   )
      }
 
