@@ -58,15 +58,15 @@ function Details() {
   <div id="barbutton1"></div>
   <div id="barbutton2"></div>
   <div id="cross">
-    <div id="leftcross">
-      <div id="leftT"></div>
+    <div id="leftcross" onClick={() => navigate(`/details/${parseInt(id) - 1}`)}>
+      <div id="leftT" ></div>
     </div>
     <div id="topcross">
       <div id="upT"></div>
     </div>
-    <div id="rightcross">
+    <div id="rightcross" onClick={() => navigate(`/details/${parseInt(id) + 1}`)}>
 
-      <div id="rightT"></div>
+      <div id="rightT" ></div>
     </div>
     <div id="midcross">
       <div id="midCircle"></div>
@@ -124,8 +124,7 @@ function Details() {
   <div id="curve1_right"></div>
   <div id="curve2_right"></div>
 
-  <button onClick={() => navigate(`/details/${parseInt(id) - 1}`)}>Anterior</button>
-      <button onClick={() => navigate(`/details/${parseInt(id) + 1}`)}>Siguiente</button>
+
 </div>
 
     </nav>

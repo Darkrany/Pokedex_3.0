@@ -143,4 +143,8 @@
   border-bottom-left-radius: 5px;
 } 
 
-
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

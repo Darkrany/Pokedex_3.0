@@ -25,7 +25,9 @@ export default function PokedexList({ pokemons, offset, setOffset }) {
 
     </div>
         
-    <button onClick={() => setOffset(offset + 20)}>Cargar más</button>
+    <div className="button-container">
+        <button onClick={() => setOffset(offset + 20)}>Cargar más</button>
+    </div>    
     </>
     
   )

@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       <header className="App-header">
     
-        <img src="https://archives.bulbagarden.net/media/upload/4/4b/Pokédex_logo.png" className="logo" alt="logo" />
+      <a href ="/" ><img src="https://archives.bulbagarden.net/media/upload/4/4b/Pokédex_logo.png" className="logo" alt="logo" /></a> 
 
         <BrowserRouter>
           <Routes>
