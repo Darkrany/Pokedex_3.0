@@ -1,59 +1,62 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useQuery, useInfiniteQuery} from '@tanstack/react-query'
 import PokedexList from './PokedexList';
 
 
 export default function Pokedex() {
 
-  const [offset, setOffset] = useState(0);
-  const [pokemons, setPokemons] = useState([]);
+
   const pkmsPerPages = 20;
-
-
-const getData = (offset) => {
-
-  return fetch('https://pokeapi.co/api/v2/pokemon/?limit=' + pkmsPerPages + '&offset=' + offset)
-      .then((res) => res.json())
-      .then((data) => {
-       
-          console.log(data)
-      });
-      
- }
-
-
-  // const { isLoading, error, data } = useQuery(['pokemons'], () => getData(offset));
-
   
+  const fetchPokemons = async ({ pageParam = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=" + pkmsPerPages }) => {
+  
+  const res = await fetch(pageParam);
+  return res.json();
+
+};
 
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-  } = useInfiniteQuery({
-    queryKey: ["character"],
-    queryFn: getData,
-    initialPageParam: "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20",
-    getNextPageParam: (lastPage) => lastPage.next,
-    getPreviousPageParam: (firstPage) => firstPage.previous,
-  });
+
+const { isLoading, error, data, fetchNextPage } = useInfiniteQuery({ 
+  queryKey: ['pokemons'],
+  queryFn: fetchPokemons,
+  getNextPageParam: (lastPage) => lastPage.next
+})
 
 
-// if (isLoading) return 'Cargando...'
+
+
+if (isLoading) return 'Cargando...'
 
  if (error) return 'Ocurrio un error: ' + error.message
 
   return (
 
- <div>
-    <PokedexList  pokemons={pokemons} 
-                  offset={offset} 
-                  setOffset={setOffset} />
+    <>
+    
+    <div>
+      {/* <pre style={{ backgroundColor: 'white', fontSize: 16}}>{JSON.stringify(data, null, 2)}</pre> */}
+      {data?.pages.map(page => {
+        return page.results.map( pokemon =>     
+        <div>
+          <div>
+            <span>{pokemon.name}</span>
+          </div>
+      </div>
+      )
 
- </div>
+      })}
+        
+      </div>
+
+       <button onClick={() => fetchNextPage()}>
+        Cargar más
+      </button>
+    
+    </>
+
+
+
   )
 
 }
