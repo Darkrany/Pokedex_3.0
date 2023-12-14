@@ -23,6 +23,15 @@ const { isLoading, error, data, fetchNextPage } = useInfiniteQuery({
   getNextPageParam: (lastPage) => lastPage.next
 })
 
+const getPokemonId = (pokemon) => {
+  const id = pokemon.url.split('/')[6];
+  return id;
+}
+
+const getPokemonName = (pokemon) => {
+  const namepk = pokemon.name.charAt().toUpperCase() + pokemon.name.substring(1);
+  return namepk;
+}
 
 
 
@@ -37,14 +46,15 @@ if (isLoading) return 'Cargando...'
     <div>
       {/* <pre style={{ backgroundColor: 'white', fontSize: 16}}>{JSON.stringify(data, null, 2)}</pre> */}
       {data?.pages.map(page => {
-        return page.results.map( pokemon =>     
-        <div>
-          <div>
-            <span>{pokemon.name}</span>
-          </div>
-      </div>
-      )
-
+        return page.results.map( (pokemon) => {
+          
+          const id = getPokemonId(pokemon);
+          const namepk = getPokemonName(pokemon);
+          
+          return <div>
+          <span>{namepk} - {id}</span>
+        </div>
+        })
       })}
         
       </div>
