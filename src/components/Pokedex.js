@@ -34,6 +34,9 @@ const getPokemonName = (pokemon) => {
 }
 
 
+const onFetchNextPageHandler = () => {
+  fetchNextPage()
+}
 
 if (isLoading) return 'Cargando...'
 
@@ -41,30 +44,35 @@ if (isLoading) return 'Cargando...'
 
   return (
 
-    <>
+    // <>
     
-    <div>
-      {/* <pre style={{ backgroundColor: 'white', fontSize: 16}}>{JSON.stringify(data, null, 2)}</pre> */}
-      {data?.pages.map(page => {
-        return page.results.map( (pokemon) => {
+    // <div>
+    //   {/* <pre style={{ backgroundColor: 'white', fontSize: 16}}>{JSON.stringify(data, null, 2)}</pre> */}
+    //   {data?.pages.map(page => {
+    //     return page.results.map( (pokemon) => {
           
-          const id = getPokemonId(pokemon);
-          const namepk = getPokemonName(pokemon);
+    //       const id = getPokemonId(pokemon);
+    //       const namepk = getPokemonName(pokemon);
           
-          return <div>
-          <span>{namepk} - {id}</span>
-        </div>
-        })
-      })}
+    //       return <div>
+    //       <span>{namepk} - {id}</span>
+    //     </div>
+    //     })
+    //   })}
         
-      </div>
+    //   </div>
 
-       <button onClick={() => fetchNextPage()}>
-        Cargar más
-      </button>
+    //    <button onClick={() => fetchNextPage()}>
+    //     Cargar más
+    //   </button>
     
-    </>
+    // </>
 
+
+ <div>
+    <PokedexList  pokemons={data} onFetchNextPage={onFetchNextPageHandler}  />
+
+ </div>
 
 
   )
